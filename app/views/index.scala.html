@@ -30,6 +30,7 @@
             <a href="/applications/{{app.applicationName}}/environments/{{env.environmentName}}"
                ng-class="{muted: env.status != 'Ready' || env.health != 'Green'}">
               {{env.environmentName}}
+              <span class="muted" style="font-size:0.8em;" ng-show="env._isActive">({{env.CNAME}})</span>
             </a>
           </li>
           <li ng-show="!app.environments._loaded" class="progress progress-striped active">

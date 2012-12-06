@@ -32,6 +32,7 @@ object Environments extends Controller with AWSClient {
       "environmentName" -> env.getEnvironmentName,
       "environmentId" -> env.getEnvironmentId,
       "CNAME" -> env.getCNAME,
+      "_isActive" -> !env.getCNAME.contains("-jen"),
       "endpointURL" -> env.getEndpointURL,
       "health" -> env.getHealth,
       "status" -> env.getStatus
