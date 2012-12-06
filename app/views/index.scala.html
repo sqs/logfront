@@ -14,10 +14,10 @@
 
 <div class="container-fluid">
   <div class="row-fluid">
-    <div class="span3">
+    <div class="span2">
       <div class="well sidebar-nav" ng-controller="ApplicationsController">
         <ul class="nav nav-list" ng-repeat="app in applications">
-          <li class="nav-header"><h4>{{app.applicationName}}</h4></li>
+          <li class="nav-header"><h5>{{app.applicationName}}</h5></li>
           <li ng-class="{active: $routeParams.envName==env.environmentName}" ng-repeat="env in app.environments">
             <a href="/applications/{{app.applicationName}}/environments/{{env.environmentName}}"
                ng-class="{muted: env.status != 'Ready' || env.health != 'Green'}">
@@ -40,7 +40,7 @@
         </span>
       </div>
     </div><!--/span-->
-    <div class="span9" ng-view></div>
+    <div class="span10" ng-view></div>
   </div><!--/row-->
 
   <hr>
