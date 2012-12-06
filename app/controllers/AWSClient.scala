@@ -7,8 +7,8 @@ trait AWSClient {
   val elasticBeanstalkClient = AWS.elasticBeanstalkClient
 
   def throttled[T](block: => T): T = synchronized {
-    java.lang.Thread.sleep(1000)
     play.api.Logger.debug(s"AWSClient throttled { ... }")
+    java.lang.Thread.sleep(500)
     block
   }
 }
