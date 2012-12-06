@@ -25,7 +25,7 @@
           <li ng-class="{active: $routeParams.envName==env.environmentName}" ng-repeat="env in app.environments">
             <a href="/applications/{{app.applicationName}}/environments/{{env.environmentName}}"
                ng-class="{muted: env.status != 'Ready' || env.health != 'Green'}">
-              {{env.environmentName}}
+              <span class="badge" ng-class="{'badge-success':env.health=='Green', 'badge-important':env.health=='Red', 'badge-warning':env.health=='Yellow'}" ng-show="env.status=='Ready'">&nbsp;</span> {{env.environmentName}}
               <span class="muted" style="font-size:0.8em;" ng-show="env._isActive">({{env.CNAME}})</span>
             </a>
           </li>
