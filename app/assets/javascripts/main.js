@@ -65,11 +65,11 @@ angular.module('logfront', ['ngResource']).
     $scope.$watch('$routeParams.instanceId', function() {
       $scope.instance = Instances.get(angular.extend({}, params, {instanceId: $routeParams.instanceId}), function() {
         $scope.instance._loaded = true;
-        $scope.loadLog(true);
+        $scope.loadLog();
       });
     });
 
-    $scope.loadLog = function(tailLogOnLoad) {
+    $scope.loadLog = function() {
       $scope._loadingLog = true;
       $http.get('/api/hosts/' + $scope.instance.privateIpAddress + '/logs/main', {
         transformResponse: function(data) { return data; }
@@ -77,9 +77,7 @@ angular.module('logfront', ['ngResource']).
         success(function(log) {
           $scope._loadingLog = false;
           $scope.log = log;
-          if (tailLogOnLoad) {
-            setTimeout($scope.tailLog, 100);
-          }
+          setTimeout($scope.tailLog, 100);
         }).
         error(function(err) {
           $log.error('Error loading logs for host ', $scope.instance.privateIpAddress, err);
