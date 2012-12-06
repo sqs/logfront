@@ -7,7 +7,7 @@ import play.api.mvc._
 import scala.collection.JavaConversions._
 
 object Applications extends Controller with AWSClient {
-  def index = Action {
+  def index = Action { throttled {
     Ok(Json.toJson(
       elasticBeanstalkClient.describeApplications(
         new DescribeApplicationsRequest()
@@ -19,5 +19,5 @@ object Applications extends Controller with AWSClient {
     )).as("application/json").withHeaders(
       CACHE_CONTROL -> "no-cache"
     )
-  }
+  }}
 }

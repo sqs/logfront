@@ -7,7 +7,7 @@ import play.api.mvc._
 import scala.collection.JavaConversions._
 
 object Environments extends Controller with AWSClient {
-  def index(appName: String) = Action {
+  def index(appName: String) = Action { throttled {
     Ok(Json.toJson(
       elasticBeanstalkClient.describeEnvironments(
         new DescribeEnvironmentsRequest().withApplicationName(appName)
@@ -17,9 +17,9 @@ object Environments extends Controller with AWSClient {
     )).as("application/json").withHeaders(
       CACHE_CONTROL -> "no-cache"
     )
-  }
+  }}
 
-  def get(appName: String, envName: String) = Action {
+  def get(appName: String, envName: String) = Action { throttled {
     elasticBeanstalkClient.describeEnvironments(
       new DescribeEnvironmentsRequest().withEnvironmentNames(List(envName))
     ).getEnvironments.headOption.map { env =>
@@ -27,7 +27,7 @@ object Environments extends Controller with AWSClient {
         CACHE_CONTROL -> "no-cache"
       )
     }.getOrElse { NotFound }
-  }
+  }}
 
   private def envToJson(env: EnvironmentDescription) =
     Json.obj(

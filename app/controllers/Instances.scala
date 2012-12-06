@@ -8,7 +8,7 @@ import play.api.mvc._
 import scala.collection.JavaConversions._
 
 object Instances extends Controller with AWSClient {
-  def index(appName: String, envName: String) = Action {
+  def index(appName: String, envName: String) = Action { throttled {
     Ok(Json.toJson(
       elasticBeanstalkClient.describeEnvironmentResources(
         new eb.DescribeEnvironmentResourcesRequest()
@@ -17,9 +17,9 @@ object Instances extends Controller with AWSClient {
     )).as("application/json").withHeaders(
       CACHE_CONTROL -> "no-cache"
     )
-  }
+  }}
 
-  def get(appName: String, envName: String, instanceId: String) = Action {
+  def get(appName: String, envName: String, instanceId: String) = Action { throttled {
     ec2Client.describeInstances(
       new ec2.DescribeInstancesRequest()
       .withInstanceIds(Set(instanceId))
@@ -28,7 +28,7 @@ object Instances extends Controller with AWSClient {
         CACHE_CONTROL -> "no-cache"
       )
     } getOrElse { NotFound }
-  }
+  }}
 
   private def instanceToJson(inst: eb.Instance) =
     Json.obj(
