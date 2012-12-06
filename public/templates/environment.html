@@ -14,9 +14,11 @@
         <li class="muted" ng-show="instances._loaded && instances.length == 0">
           No instances found
         </li>
+        <li class="nav-header"><h5>URL</h5></li>
+        <li><a target="_blank" href="https://{{env.CNAME}}">{{env.CNAME}}</a></li>
+        <li class="nav-header"><h5>Status</h5></li>
+        <li>{{env.status}} {{env.health}}</li>
       </ul>
-      <h5>URL</h5>
-      <p><a href="https://{{env.CNAME}}">{{env.CNAME}}</a></p>
     </div>
   </div>
   <div class="span10 ng-cloak" ng-show="$routeParams.instanceId">

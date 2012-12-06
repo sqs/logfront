@@ -5,12 +5,13 @@
 <style type="text/css">
   body {
     padding-top: 60px;
-    padding-bottom: 40px;
     overflow: hidden;
   }
   .sidebar-nav {
     padding: 9px 0;
-    height: 800px;
+    position: fixed;
+    top: 60px;
+    bottom: 0;
     overflow-y: auto;
   }
 </style>
@@ -19,11 +20,6 @@
   <div class="row-fluid">
     <div class="span2">
       <div class="well sidebar-nav" ng-controller="ApplicationsController">
-        <div class="btn-toolbar">
-          <div class="btn-group">
-            <button class="btn" ng-click="load()">Reload</button>
-          </div>
-        </div>
         <ul class="nav nav-list" ng-repeat="app in applications">
           <li class="nav-header"><h5>{{app.applicationName}}</h5></li>
           <li ng-class="{active: $routeParams.envName==env.environmentName}" ng-repeat="env in app.environments">
@@ -47,6 +43,11 @@
         <span class="muted" ng-show="applications._loaded && applications.length == 0">
           No applications found
         </span>
+        <div class="btn-toolbar">
+          <div class="btn-group">
+            <button class="btn" ng-click="load()">Reload</button>
+          </div>
+        </div>
       </div>
     </div><!--/span-->
     <div class="span10" ng-view></div>
