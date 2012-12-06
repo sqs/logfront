@@ -6,7 +6,7 @@ import play.api.mvc._
 object Logs extends Controller {
   def get(host: String, logName: String) = Action {
     Ok(
-      execRemote(host, "sudo tail -n 500 /var/log/tomcat7/application.log")
+      execRemote(host, "sudo tail -n 5000 /var/log/tomcat7/catalina.out")
     ).as("text/plain").withHeaders(
       CACHE_CONTROL -> "no-cache"
     )
