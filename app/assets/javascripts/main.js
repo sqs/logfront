@@ -25,7 +25,7 @@ angular.module('logfront', ['ngResource']).
   factory('Instances', ['$resource', function($resource) {
     return $resource('/api/applications/:appName/environments/:envName/instances/:instanceId');
   }]).
-  controller('ApplicationsController', ['Applications', 'Environments', '$scope', '$routeParams', '$timeout', function(Applications, Environments, $scope, $routeParams, $timeout) {
+  controller('ApplicationsController', ['Applications', 'Environments', '$scope', '$routeParams', '$window', function(Applications, Environments, $scope, $routeParams, $window) {
     $scope.$routeParams = $routeParams;
 
     $scope.load = function() {
@@ -41,7 +41,7 @@ angular.module('logfront', ['ngResource']).
 
     $scope.load();
 
-    $timeout($scope.load, 15000);
+    $window.setInterval($scope.load, 15000);
   }]).
   controller('HomeController', [function() {
     
