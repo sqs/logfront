@@ -18,6 +18,9 @@ angular.module('logfront', ['ngResource']).
   factory('Environments', ['$resource', function($resource) {
     return $resource('/api/applications/:appName/environments/:envName');
   }]).
+  factory('Instances', ['$resource', function($resource) {
+    return $resource('/api/applications/:appName/environments/:envName/instances');
+  }]).
   controller('ApplicationsController', ['Applications', 'Environments', '$scope', '$routeParams', function(Applications, Environments, $scope, $routeParams) {
     $scope.$routeParams = $routeParams;
 
@@ -33,9 +36,15 @@ angular.module('logfront', ['ngResource']).
   controller('HomeController', [function() {
     
   }]).
-  controller('EnvironmentController', ['Environments', '$scope', '$routeParams', function(Environments, $scope, $routeParams) {
-    $scope.env = Environments.get({appName: $routeParams.appName, envName: $routeParams.envName}, function() {
-      $scope._loaded = true;
+  controller('EnvironmentController', ['Environments', 'Instances', '$scope', '$routeParams', function(Environments, Instances, $scope, $routeParams) {
+    var params = {appName: $routeParams.appName, envName: $routeParams.envName};
+
+    $scope.env = Environments.get(params, function() {
+      $scope.env._loaded = true;
+    });
+
+    $scope.instances = Instances.query(params, function() {
+      $scope.instances._loaded = true;
     });
   }]);
 

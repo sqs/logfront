@@ -3,6 +3,8 @@ GET     /api/applications           logfront.controllers.Applications.index
 GET     /api/applications/:appName/environments    logfront.controllers.Environments.index(appName: String)
 GET     /api/applications/:appName/environments/:envName    logfront.controllers.Environments.get(appName: String, envName: String)
 
+GET     /api/applications/:appName/environments/:envName/instances    logfront.controllers.Instances.index(appName: String, envName: String)
+
 GET     /api/applications/:appName/environments/:envName/logs    logfront.controllers.Logs.index(appName: String, envName: String)
 
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
