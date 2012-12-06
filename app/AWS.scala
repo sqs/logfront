@@ -2,6 +2,7 @@ package logfront
 
 import com.amazonaws.auth.PropertiesCredentials
 import com.amazonaws.services.elasticbeanstalk.AWSElasticBeanstalkClient
+import com.amazonaws.services.ec2.AmazonEC2Client
 import java.io.File
 import play.api.Play
 
@@ -17,10 +18,17 @@ object AWS {
     new PropertiesCredentials(file)
   }
 
+  private lazy val region = Play.current.configuration.getString("aws.region").getOrElse {
+    throw new Exception("The `aws.region` must be specified in the logfront configuration.")
+  }
+
+  lazy val ec2Client: AmazonEC2Client = {
+    val c = new AmazonEC2Client(awsCredentials)
+    c.setEndpoint("https://ec2." + region + ".amazonaws.com")
+    c
+  }
+
   lazy val elasticBeanstalkClient: AWSElasticBeanstalkClient = {
-    val region = Play.current.configuration.getString("aws.region").getOrElse {
-      throw new Exception("The `aws.region` must be specified in the logfront configuration.")
-    }
     val c = new AWSElasticBeanstalkClient(awsCredentials)
     c.setEndpoint("https://elasticbeanstalk." + region + ".amazonaws.com")
     c

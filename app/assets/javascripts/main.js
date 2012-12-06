@@ -53,10 +53,10 @@ angular.module('logfront', ['ngResource']).
       $scope.instances._loaded = true;
     });
 
-    if ($routeParams.instanceId) {
+    $scope.$watch('$routeParams.instanceId', function() {
       $scope.instance = Instances.get(angular.extend({}, params, {instanceId: $routeParams.instanceId}), function() {
         $scope.instance._loaded = true;
       });
-    }
+    });
   }]);
 
