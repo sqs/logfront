@@ -78,7 +78,7 @@ angular.module('logfront', ['ngResource']).
           $scope._loadingLog = false;
           $scope.log = log;
           if (tailLogOnLoad) {
-            setTimeout($scope.tailLog, 10);
+            setTimeout($scope.tailLog, 100);
           }
         }).
         error(function(err) {
