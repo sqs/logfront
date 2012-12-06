@@ -40,7 +40,7 @@ angular.module('logfront', ['ngResource']).
   controller('HomeController', [function() {
     
   }]).
-  controller('EnvironmentController', ['Environments', 'Instances', '$scope', '$routeParams', function(Environments, Instances, $scope, $routeParams) {
+  controller('EnvironmentController', ['Environments', 'Instances', '$http', '$scope', '$routeParams', '$log', function(Environments, Instances, $http, $scope, $routeParams, $log) {
     var params = {appName: $routeParams.appName, envName: $routeParams.envName};
 
     $scope.$routeParams = $routeParams;
@@ -56,7 +56,18 @@ angular.module('logfront', ['ngResource']).
     $scope.$watch('$routeParams.instanceId', function() {
       $scope.instance = Instances.get(angular.extend({}, params, {instanceId: $routeParams.instanceId}), function() {
         $scope.instance._loaded = true;
+        $scope.loadLog();
       });
     });
+
+    $scope.loadLog = function() {
+      $http.get('/api/hosts/' + $scope.instance.privateIpAddress + '/logs/main').
+        success(function(log) {
+          $scope.log = log;
+        }).
+        error(function(err) {
+          $log.error('Error loading logs for host ', $scope.instance.privateIpAddress, err);
+        });
+    }
   }]);
 

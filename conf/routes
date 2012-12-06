@@ -6,7 +6,7 @@ GET     /api/applications/:appName/environments/:envName    logfront.controllers
 GET     /api/applications/:appName/environments/:envName/instances    logfront.controllers.Instances.index(appName: String, envName: String)
 GET     /api/applications/:appName/environments/:envName/instances/:instanceId    logfront.controllers.Instances.get(appName: String, envName: String, instanceId: String)
 
-GET     /api/applications/:appName/environments/:envName/logs    logfront.controllers.Logs.index(appName: String, envName: String)
+GET     /api/hosts/:host/logs/:logName    logfront.controllers.Logs.get(host: String, logName: String)
 
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
 

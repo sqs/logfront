@@ -4,8 +4,8 @@ import play.api._
 import play.api.mvc._
 
 object Logs extends Controller {
-  def index(appName: String, envName: String) = Action {
-    Ok("[]").as("application/json").withHeaders(
+  def get(host: String, logName: String) = Action {
+    Ok("LOG123").as("text/plain").withHeaders(
       CACHE_CONTROL -> "no-cache"
     )
   }
