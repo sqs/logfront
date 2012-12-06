@@ -46,7 +46,7 @@ angular.module('logfront', ['ngResource']).
   controller('HomeController', [function() {
     
   }]).
-  controller('EnvironmentController', ['Environments', 'Instances', '$http', '$scope', '$location', '$routeParams', '$log', function(Environments, Instances, $http, $scope, $location, $routeParams, $log) {
+  controller('EnvironmentController', ['Environments', 'Instances', '$http', '$scope', '$location', '$window', '$routeParams', '$log', function(Environments, Instances, $http, $scope, $location, $window, $routeParams, $log) {
     var params = {appName: $routeParams.appName, envName: $routeParams.envName};
 
     $scope.$routeParams = $routeParams;
@@ -65,15 +65,25 @@ angular.module('logfront', ['ngResource']).
     $scope.$watch('$routeParams.instanceId', function() {
       $scope.instance = Instances.get(angular.extend({}, params, {instanceId: $routeParams.instanceId}), function() {
         $scope.instance._loaded = true;
-        $scope.loadLog();
+        $scope.loadLog(true);
       });
     });
 
-    $scope.loadLog = function() {
-      $http.get('/api/hosts/' + $scope.instance.privateIpAddress + '/logs/main').
+    $window.setInterval(function() {
+      if ($scope.instance._loaded) {
+        $scope.loadLog(false);
+      }
+    }, 10000);
+
+    $scope.loadLog = function(tailLogOnLoad) {
+      $http.get('/api/hosts/' + $scope.instance.privateIpAddress + '/logs/main', {
+        transformResponse: function(data) { return data; }
+      }).
         success(function(log) {
           $scope.log = log;
-          setTimeout($scope.tailLog, 10);
+          if (tailLogOnLoad) {
+            setTimeout($scope.tailLog, 10);
+          }
         }).
         error(function(err) {
           $log.error('Error loading logs for host ', $scope.instance.privateIpAddress, err);
