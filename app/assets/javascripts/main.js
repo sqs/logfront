@@ -64,10 +64,16 @@ angular.module('logfront', ['ngResource']).
       $http.get('/api/hosts/' + $scope.instance.privateIpAddress + '/logs/main').
         success(function(log) {
           $scope.log = log;
+          setTimeout($scope.tailLog, 10);
         }).
         error(function(err) {
           $log.error('Error loading logs for host ', $scope.instance.privateIpAddress, err);
         });
-    }
+    };
+
+    $scope.tailLog = function() {
+      var log = document.getElementById('log');
+      log.scrollTop = log.scrollHeight;
+    };
   }]);
 
