@@ -34,6 +34,8 @@ angular.module('logfront', ['ngResource']).
     
   }]).
   controller('EnvironmentController', ['Environments', '$scope', '$routeParams', function(Environments, $scope, $routeParams) {
-    $scope.env = Environments.get({appName: $routeParams.appName, envName: $routeParams.envName});
+    $scope.env = Environments.get({appName: $routeParams.appName, envName: $routeParams.envName}, function() {
+      $scope._loaded = true;
+    });
   }]);
 
