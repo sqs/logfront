@@ -1,5 +1,54 @@
-@(message: String)
+@()
 
 @main("logfront") {
-  @message
+
+<style type="text/css">
+  body {
+    padding-top: 60px;
+    padding-bottom: 40px;
+  }
+  .sidebar-nav {
+    padding: 9px 0;
+  }
+</style>
+
+<div class="container-fluid">
+  <div class="row-fluid">
+    <div class="span3">
+      <div class="well sidebar-nav" ng-controller="ApplicationsController">
+        <h3>Applications</h3>
+
+        <ul class="nav nav-list" ng-repeat="app in applications">
+          <li class="nav-header"><h4>{{app.applicationName}}</h4></li>
+          <li ng-class="{active: $routeParams.envName==env.environmentName}" ng-repeat="env in app.environments">
+            <a href="/applications/{{app.applicationName}}/environments/{{env.environmentName}}">
+              {{env.environmentName}}
+            </a>
+          </li>
+          <li ng-show="!app.environments._loaded" class="progress progress-striped active">
+            <div class="bar" style="width: 100%;"></div>
+          </li>
+          <li class="muted" ng-show="app.environments._loaded && app.environments.length == 0">
+            No environments found
+          </li>
+        </ul>
+
+        <div class="progress progress-striped active" ng-show="!applications._loaded">
+          <div class="bar" style="width: 100%;"></div>
+        </div>
+        <span class="muted" ng-show="applications._loaded && applications.length == 0">
+          No applications found
+        </span>
+      </div>
+    </div><!--/span-->
+    <div class="span9" ng-view></div>
+  </div><!--/row-->
+
+  <hr>
+
+  <footer>
+    Logfront
+  </footer>
+</div>
+
 }

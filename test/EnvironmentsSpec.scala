@@ -16,5 +16,15 @@ class EnvironmentsSpec extends Specification {
         header("Cache-Control", index) must beSome.which(_ == "no-cache")
       }
     }
+
+    "return a single environment" in {
+      running(FakeApplication()) {
+        val get = route(FakeRequest(GET, "/api/applications/my-app/environments/my-env")).get
+        
+        status(get) must equalTo(OK)
+        contentType(get) must beSome.which(_ == "application/json")
+        header("Cache-Control", get) must beSome.which(_ == "no-cache")
+      }
+    }
   }
 }
