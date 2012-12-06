@@ -1,12 +1,22 @@
-<div class="progress progress-striped active" ng-show="!env._loaded">
-  <div class="bar" style="width: 100%;"></div>
+<div class="row">
+  <div class="span3">
+    <div class="well sidebar-nav">
+      <ul class="nav nav-list">
+        <li class="nav-header"><h5>Instances</h5></li>
+        <li ng-class="{active: $routeParams.instanceId==inst.id}" ng-repeat="inst in instances">
+          <a href="/applications/{{$routeParams.appName}}/environments/{{$routeParams.environmentName}}/instances/{{inst.id}}">
+            {{inst.id}}
+          </a>
+        </li>
+        <li ng-show="!instances._loaded" class="progress progress-striped active">
+          <div class="bar" style="width: 100%;"></div>
+        </li>
+        <li class="muted" ng-show="instances._loaded && instances.length == 0">
+          No instances found
+        </li>
+      </ul>
+    </div>
+  </div>
 </div>
 
-<h1>{{env.environmentName}}</h1>
 
-
-<ul>
-  <li ng-repeat="instance in instances">
-    {{instance.id}}
-  </li>
-</ul>
