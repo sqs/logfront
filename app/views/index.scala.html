@@ -19,7 +19,8 @@
         <ul class="nav nav-list" ng-repeat="app in applications">
           <li class="nav-header"><h4>{{app.applicationName}}</h4></li>
           <li ng-class="{active: $routeParams.envName==env.environmentName}" ng-repeat="env in app.environments">
-            <a href="/applications/{{app.applicationName}}/environments/{{env.environmentName}}">
+            <a href="/applications/{{app.applicationName}}/environments/{{env.environmentName}}"
+               ng-class="{muted: env.status != 'Ready' || env.health != 'Green'}">
               {{env.environmentName}}
             </a>
           </li>
