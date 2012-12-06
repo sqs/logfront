@@ -1,3 +1,5 @@
+GET     /api/applications           logfront.controllers.Applications.index
+
 GET     /                           logfront.controllers.Application.index
 
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
