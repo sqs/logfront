@@ -11,7 +11,9 @@ object Environments extends Controller with AWSClient {
     Ok(Json.toJson(
       elasticBeanstalkClient.describeEnvironments(
         new DescribeEnvironmentsRequest().withApplicationName(appName)
-      ).getEnvironments.map(envToJson)
+      ).getEnvironments.filter { e =>
+        EnvironmentStatus.valueOf(e.getStatus) != EnvironmentStatus.Terminated
+      }.map(envToJson)
     )).as("application/json").withHeaders(
       CACHE_CONTROL -> "no-cache"
     )
