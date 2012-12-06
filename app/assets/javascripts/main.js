@@ -69,12 +69,6 @@ angular.module('logfront', ['ngResource']).
       });
     });
 
-    $window.setInterval(function() {
-      if ($scope.instance._loaded) {
-        $scope.loadLog(false);
-      }
-    }, 10000);
-
     $scope.loadLog = function(tailLogOnLoad) {
       $http.get('/api/hosts/' + $scope.instance.privateIpAddress + '/logs/main', {
         transformResponse: function(data) { return data; }
