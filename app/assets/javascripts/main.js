@@ -44,7 +44,7 @@ angular.module('logfront', ['ngResource']).
   controller('HomeController', [function() {
     
   }]).
-  controller('EnvironmentController', ['Environments', 'Instances', '$http', '$scope', '$routeParams', '$log', function(Environments, Instances, $http, $scope, $routeParams, $log) {
+  controller('EnvironmentController', ['Environments', 'Instances', '$http', '$scope', '$location', '$routeParams', '$log', function(Environments, Instances, $http, $scope, $location, $routeParams, $log) {
     var params = {appName: $routeParams.appName, envName: $routeParams.envName};
 
     $scope.$routeParams = $routeParams;
@@ -55,6 +55,9 @@ angular.module('logfront', ['ngResource']).
 
     $scope.instances = Instances.query(params, function() {
       $scope.instances._loaded = true;
+      if (!$routeParams.instanceId && $scope.instances.length > 0) {
+        $location.path($location.path() + '/instances/' + $scope.instances[0].id);
+      }
     });
 
     $scope.$watch('$routeParams.instanceId', function() {
