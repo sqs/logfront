@@ -1,3 +1,4 @@
+/.lib/0.12.1/sbt-launch.jar
 logs
 project/project
 project/target
@@ -13,3 +14,4 @@ dist
 /.project
 /RUNNING_PID
 /.settings
+/sbt
