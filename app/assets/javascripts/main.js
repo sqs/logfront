@@ -70,10 +70,12 @@ angular.module('logfront', ['ngResource']).
     });
 
     $scope.loadLog = function(tailLogOnLoad) {
+      $scope._loadingLog = true;
       $http.get('/api/hosts/' + $scope.instance.privateIpAddress + '/logs/main', {
         transformResponse: function(data) { return data; }
       }).
         success(function(log) {
+          $scope._loadingLog = false;
           $scope.log = log;
           if (tailLogOnLoad) {
             setTimeout($scope.tailLog, 10);

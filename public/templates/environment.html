@@ -36,6 +36,7 @@
         <div class="btn-group">
           <button class="btn btn-primary" ng-click="loadLog()">Reload</button>
           <button class="btn" ng-click="tailLog()">Scroll to bottom</button>
+          <span class="label" ng-show="_loadingLog">Loading new log...</span>
         </div>
       </div>
       <pre id="log" style="white-space: pre-wrap; font-family: 'monaco','inconsolata',monospace;overflow:scroll;height:800px;border:solid 1px #ccc;">{{log}}</pre>
