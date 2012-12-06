@@ -9,11 +9,14 @@ import scala.collection.JavaConversions._
 object Applications extends Controller with AWSClient {
   def index = Action { throttled {
     Ok(Json.toJson(
-      elasticBeanstalkClient.describeApplications(
-        new DescribeApplicationsRequest()
-      ).getApplications.map { app =>
+      elasticBeanstalkClient.describeEnvironments(
+        new DescribeEnvironmentsRequest()
+      ).getEnvironments.filter { e =>
+        EnvironmentStatus.valueOf(e.getStatus) != EnvironmentStatus.Terminated
+      }.groupBy(_.getApplicationName).map { case (appName, envs) =>
         Json.obj(
-          "applicationName" -> app.getApplicationName
+          "applicationName" -> appName,
+          "environments" -> Json.toJson(envs.map(Environments.envToJson))
         )
       }
     )).as("application/json").withHeaders(

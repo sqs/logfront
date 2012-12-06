@@ -29,7 +29,7 @@ object Environments extends Controller with AWSClient {
     }.getOrElse { NotFound }
   }}
 
-  private def envToJson(env: EnvironmentDescription) =
+  def envToJson(env: EnvironmentDescription) =
     Json.obj(
       "environmentName" -> env.getEnvironmentName,
       "environmentId" -> env.getEnvironmentId,

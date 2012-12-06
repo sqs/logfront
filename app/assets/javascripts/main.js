@@ -25,21 +25,23 @@ angular.module('logfront', ['ngResource']).
   factory('Instances', ['$resource', function($resource) {
     return $resource('/api/applications/:appName/environments/:envName/instances/:instanceId');
   }]).
-  controller('ApplicationsController', ['Applications', 'Environments', '$scope', '$routeParams', function(Applications, Environments, $scope, $routeParams) {
+  controller('ApplicationsController', ['Applications', 'Environments', '$scope', '$routeParams', '$timeout', function(Applications, Environments, $scope, $routeParams, $timeout) {
     $scope.$routeParams = $routeParams;
 
     $scope.load = function() {
-      $scope.applications = Applications.query({}, function() {
+      console.log('LOAD');
+      Applications.query({}, function(applications) {
+        $scope.applications = applications;
         $scope.applications._loaded = true;
         angular.forEach($scope.applications, function(app) {
-          app.environments = Environments.query({appName: app.applicationName}, function() {
-            app.environments._loaded = true;
-          });
+          app.environments._loaded = true;
         });
       });
     };
 
     $scope.load();
+
+    $timeout($scope.load, 15000);
   }]).
   controller('HomeController', [function() {
     
