@@ -6,9 +6,12 @@
   body {
     padding-top: 60px;
     padding-bottom: 40px;
+    overflow: hidden;
   }
   .sidebar-nav {
     padding: 9px 0;
+    height: 800px;
+    overflow-y: auto;
   }
 </style>
 
@@ -16,6 +19,11 @@
   <div class="row-fluid">
     <div class="span2">
       <div class="well sidebar-nav" ng-controller="ApplicationsController">
+        <div class="btn-toolbar">
+          <div class="btn-group">
+            <button class="btn" ng-click="load()">Reload</button>
+          </div>
+        </div>
         <ul class="nav nav-list" ng-repeat="app in applications">
           <li class="nav-header"><h5>{{app.applicationName}}</h5></li>
           <li ng-class="{active: $routeParams.envName==env.environmentName}" ng-repeat="env in app.environments">
