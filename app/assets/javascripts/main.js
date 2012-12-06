@@ -28,14 +28,18 @@ angular.module('logfront', ['ngResource']).
   controller('ApplicationsController', ['Applications', 'Environments', '$scope', '$routeParams', function(Applications, Environments, $scope, $routeParams) {
     $scope.$routeParams = $routeParams;
 
-    $scope.applications = Applications.query({}, function() {
-      $scope.applications._loaded = true;
-      angular.forEach($scope.applications, function(app) {
-        app.environments = Environments.query({appName: app.applicationName}, function() {
-          app.environments._loaded = true;
+    $scope.load = function() {
+      $scope.applications = Applications.query({}, function() {
+        $scope.applications._loaded = true;
+        angular.forEach($scope.applications, function(app) {
+          app.environments = Environments.query({appName: app.applicationName}, function() {
+            app.environments._loaded = true;
+          });
         });
       });
-    });
+    };
+
+    $scope.load();
   }]).
   controller('HomeController', [function() {
     
