@@ -10,6 +10,10 @@ angular.module('logfront', ['ngResource']).
         controller: 'EnvironmentController',
         templateUrl: '/assets/templates/environment.html'
       }).
+      when('/applications/:appName/environments/:envName/instances/:instanceId', {
+        controller: 'EnvironmentController',
+        templateUrl: '/assets/templates/environment.html'
+      }).
       otherwise({redirectTo: '/'});
   }]).
   factory('Applications', ['$resource', function($resource) {
@@ -19,7 +23,7 @@ angular.module('logfront', ['ngResource']).
     return $resource('/api/applications/:appName/environments/:envName');
   }]).
   factory('Instances', ['$resource', function($resource) {
-    return $resource('/api/applications/:appName/environments/:envName/instances');
+    return $resource('/api/applications/:appName/environments/:envName/instances/:instanceId');
   }]).
   controller('ApplicationsController', ['Applications', 'Environments', '$scope', '$routeParams', function(Applications, Environments, $scope, $routeParams) {
     $scope.$routeParams = $routeParams;
@@ -48,5 +52,11 @@ angular.module('logfront', ['ngResource']).
     $scope.instances = Instances.query(params, function() {
       $scope.instances._loaded = true;
     });
+
+    if ($routeParams.instanceId) {
+      $scope.instance = Instances.get(angular.extend({}, params, {instanceId: $routeParams.instanceId}), function() {
+        $scope.instance._loaded = true;
+      });
+    }
   }]);
 

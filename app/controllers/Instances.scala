@@ -18,6 +18,13 @@ object Instances extends Controller with AWSClient {
     )
   }
 
+  def get(appName: String, envName: String, instanceId: String) = Action {
+    Ok(Json.obj(
+    )).as("application/json").withHeaders(
+      CACHE_CONTROL -> "no-cache"
+    )
+  }
+
   private def instanceToJson(inst: Instance) =
     Json.obj(
       "id" -> inst.getId
