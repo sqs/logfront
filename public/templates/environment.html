@@ -1,47 +1,43 @@
-<div class="row">
-  <div class="span2">
-    <div class="well sidebar-nav">
-      <ul class="nav nav-list">
-        <li class="nav-header"><h5>Instances</h5></li>
-        <li ng-class="{active: $routeParams.instanceId==inst.id}" ng-repeat="inst in instances">
-          <a href="/applications/{{$routeParams.appName}}/environments/{{$routeParams.envName}}/instances/{{inst.id}}">
-            {{inst.id}}
-          </a>
-        </li>
-        <li ng-show="!instances._loaded" class="progress progress-striped active">
-          <div class="bar" style="width: 100%;"></div>
-        </li>
-        <li class="muted" ng-show="instances._loaded && instances.length == 0">
-          No instances found
-        </li>
-        <li class="nav-header"><h5>URL</h5></li>
-        <li><a target="_blank" href="https://{{env.CNAME}}">{{env.CNAME}}</a></li>
-        <li class="nav-header"><h5>Status</h5></li>
-        <li>{{env.status}} {{env.health}}</li>
-      </ul>
-    </div>
-  </div>
-  <div class="span10 ng-cloak" ng-show="$routeParams.instanceId">
-    <h1>{{$routeParams.instanceId}}</h1>
-    <div ng-show="!instance._loaded" class="progress progress-striped active">
-      <div class="bar" style="width: 100%;"></div>
-    </div>
-    <h2>
-      {{instance.name}} at
-      <a href="http://{{instance.privateIpAddress}}/">{{instance.privateIpAddress}}</a>
-      {{instance.keyName}}
-    </h2>
-    <div class="well well-small">
-      <div class="btn-toolbar">
-        <div class="btn-group">
-          <button class="btn btn-primary" ng-click="loadLog()">Reload</button>
-          <button class="btn" ng-click="tailLog()">Scroll to bottom</button>
-          <span class="label" ng-show="_loadingLog">Loading new log...</span>
-        </div>
-      </div>
-      <pre id="log" style="white-space: pre-wrap; font-family: 'monaco','inconsolata',monospace;overflow:scroll;height:800px;border:solid 1px #ccc;">{{log}}</pre>
-    </div>
+<div class="span2">
+  <div class="well sidebar-nav">
+    <ul class="nav nav-list">
+      <li class="nav-header"><h5>Instances</h5></li>
+      <li ng-class="{active: $routeParams.instanceId==inst.id}" ng-repeat="inst in instances">
+        <a href="/applications/{{$routeParams.appName}}/environments/{{$routeParams.envName}}/instances/{{inst.id}}">
+          {{inst.id}}
+        </a>
+      </li>
+      <li ng-show="!instances._loaded" class="progress progress-striped active">
+        <div class="bar" style="width: 100%;"></div>
+      </li>
+      <li class="muted" ng-show="instances._loaded && instances.length == 0">
+        No instances found
+      </li>
+      <li class="nav-header"><h5>URL</h5></li>
+      <li><a target="_blank" href="https://{{env.CNAME}}">{{env.CNAME}}</a></li>
+      <li class="nav-header"><h5>Status</h5></li>
+      <li>{{env.status}} {{env.health}}</li>
+    </ul>
   </div>
 </div>
-
-
+<div class="span10 ng-cloak" ng-show="$routeParams.instanceId">
+  <h1>{{$routeParams.instanceId}}</h1>
+  <div ng-show="!instance._loaded" class="progress progress-striped active">
+    <div class="bar" style="width: 100%;"></div>
+  </div>
+  <h2>
+    {{instance.name}} at
+    <a href="http://{{instance.privateIpAddress}}/">{{instance.privateIpAddress}}</a>
+    {{instance.keyName}}
+  </h2>
+  <div class="well well-small">
+    <div class="btn-toolbar">
+      <div class="btn-group">
+        <button class="btn btn-primary" ng-click="loadLog()">Reload</button>
+        <button class="btn" ng-click="tailLog()">Scroll to bottom</button>
+        <span class="label" ng-show="_loadingLog">Loading new log...</span>
+      </div>
+    </div>
+    <pre id="log" style="white-space: pre-wrap; font-family: 'monaco','inconsolata',monospace;overflow:scroll;height:800px;border:solid 1px #ccc;">{{log}}</pre>
+  </div>
+</div>
