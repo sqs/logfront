@@ -41,6 +41,6 @@ object Instances extends Controller with AWSClient {
       "instanceType" -> inst.getInstanceType,
       "keyName" -> inst.getKeyName,
       "name" -> inst.getTags.find(_.getKey == "Name").map(_.getValue).getOrElse("").toString,
-      "privateIpAddress" -> inst.getPrivateIpAddress
+      "privateIpAddress" -> (if (inst.getPublicDnsName != null && inst.getPublicDnsName != "") inst.getPublicDnsName else inst.getPrivateIpAddress)
     )
 }
