@@ -1,4 +1,6 @@
-<div class="span2">
+<div class="container span8">
+<div class="row">
+<div class="span3">
   <div class="well sidebar-nav">
     <ul class="nav nav-list">
       <li class="nav-header"><h5>Instances</h5></li>
@@ -20,7 +22,7 @@
     </ul>
   </div>
 </div>
-<div class="span10 ng-cloak" ng-show="$routeParams.instanceId">
+<div class="span9 ng-cloak" ng-show="$routeParams.instanceId">
   <h1>{{$routeParams.instanceId}}</h1>
   <div ng-show="!instance._loaded" class="progress progress-striped active">
     <div class="bar" style="width: 100%;"></div>
@@ -40,4 +42,6 @@
     </div>
     <pre id="log" style="white-space: pre-wrap; font-family: 'monaco','inconsolata',monospace;overflow:scroll;height:800px;border:solid 1px #ccc;">{{log}}</pre>
   </div>
+</div>
+</div>
 </div>
